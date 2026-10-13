@@ -1,0 +1,647 @@
+Scenario Name: Scenario 1 — Search Functionality
+======================================================================
+Weak Prompt: ❌ Weak: "Test the search feature."
+
+What I Feel is Missing
+- Complete context information is missing
+- There is no Product requirement on how to invoke the search feature
+- Sample test data for input and output validation is not given
+- Expected outcome (Ex: Search should return 10 results per page 
+
+✅ Rewritten Prompt
+Combine all ICEPOT components into your final prompt here
+I - Instruction - Generate comprehensive manual test cases to thoroughly test the "Search" feature, including positive search, filter/sort behaviors, empty/invalid inputs
+
+C - Context - Use Advantage online shopping application https://www.advantageonlineshopping.com/#/.
+Consider standard e-commerce search workflows such as searching by product name, handling non-existent products, and page pagination/layout constraints.
+
+E - Example - Use realistic product search inputs such as "Laptops", "Mice", or Non-existence/invalid characters like "Car insurance" or "!@#$%" to validate both successful result retrievals and empty state "No results found" behaviors.
+
+P - Persona - Act as a Senior QA Engineer
+
+O - Output Format - Format all test cases using Cucumber Gherkin syntax (Feature, Scenario, Given, When, Then, And). Group scenarios logically (e.g., Valid Search, Invalid Search, Filters).
+
+T - Tone - Maintain a formal, technical, and simple tone suitable for technical stakeholders.
+
+
+
+Observations OBS: Write your first observation on what improved in the output
+LLM used: ChatGPT
+a) For weak prompt "Test the search feature", the LLM is not clear and returned response as 
+Search is working! 🔎 I can look up current information on the web, find specific websites, compare products, and search for local businesses.
+Here’s a quick test: What would you like me to search for?
+- Web search
+- Latest news
+- Local places and business near me
+
+b) Improved prompt using ICEPOT framework
+The rewritten prompt transforms a vague instruction into an actionable, production-ready QA specification prompt. By applying the ICEPOT framework.
+
+Output
+Search Feature — Comprehensive Manual Test Cases
+Application: Advantage Online Shopping
+Feature under test: Product Search
+Test type: Manual functional, negative, boundary, UI, filtering, sorting, and pagination testing
+Format: Cucumber Gherkin
+
+The following test suite covers standard e-commerce search workflows, including successful product retrieval, invalid and empty inputs, result accuracy, filters, sorting, pagination, and layout constraints. Test scenarios are written to be executed manually against the application at 
+Advantage Online Shopping .
+
+1. Test prerequisites and execution assumptions
+The application is accessible, and the tester can navigate to the home page and product listing pages.
+
+Searchable product categories include Laptops, Mice, Tablets, Headphones, and Speakers, subject to the catalog currently available.
+
+Product availability and result counts may change. Verify expected results against the live catalog rather than assuming fixed inventory.
+
+For filter and sort scenarios, use the controls actually exposed by the relevant listing page. If a control is not available, mark the scenario as not applicable and record the limitation.
+
+Unless specified otherwise, search results should match the submitted query, invalid searches should not crash the application, and result layouts should remain usable.
+
+2. Feature file: product_search.feature
+Each scenario is independent unless a prerequisite is explicitly stated. Expected behavior represents the intended acceptance criteria and should be compared with the application's actual behavior.
+
+Feature: Product search
+gherkin
+Feature: Product Search
+  As an online shopper
+  I want to search for products using keywords
+  So that I can find relevant products quickly
+
+  Background:
+    Given the Advantage Online Shopping application is accessible
+    And the home page is fully loaded
+    And the product catalog is available
+3. Valid search scenarios
+gherkin
+  Rule: Valid search queries
+
+    Scenario: Search using a product category name
+      Given the user is on the home page
+      When the user opens the search interface
+      And enters "Laptops" in the search field
+      Then matching laptop products should be displayed
+      And each result should contain a product name
+      And each result should display the available product information
+      And the results should be relevant to the search query
+
+    Scenario: Search for mice
+      Given the user is on the home page
+      When the user searches for "Mice"
+      Then matching mouse products should be displayed
+      And unrelated products should not be displayed as exact matches
+      And the result list should remain usable
+
+    Scenario: Search for a product using its full name
+      Given the user knows the exact name of an existing product
+      When the user enters the complete product name in the search field
+      Then the matching product should appear in the results
+      And the displayed product name should correspond to the catalog entry
+      And the user should be able to open the product details
+
+    Scenario: Search using a partial product name
+      Given the catalog contains a product with a searchable name
+      When the user enters a distinctive substring of that product name
+      Then relevant matching products should be displayed
+      And the results should follow the application's supported matching rules
+
+    Scenario: Search using a product brand
+      Given the catalog contains products from a searchable brand
+      When the user searches for the brand name
+      Then products matching the brand should be displayed
+      And each returned product should be relevant to the query
+
+    Scenario: Search using a product model identifier
+      Given a product with a searchable model identifier exists
+      When the user enters that model identifier
+      Then the corresponding product should be displayed
+      And the product identifier should match the catalog information
+
+    Scenario: Search using a single keyword
+      Given the search interface is available
+      When the user searches for "Laptop"
+      Then relevant matching products should be displayed
+      And the search should complete without an application error
+
+    Scenario: Search using multiple keywords
+      Given the catalog contains products matching multiple keywords
+      When the user searches for "HP Laptop"
+      Then the results should follow the application's multi-keyword matching rules
+      And returned products should be relevant to the submitted query
+
+    Scenario: Search with leading and trailing spaces
+      Given the user is on the home page
+      When the user searches for "  Laptops  "
+      Then the application should handle the surrounding whitespace
+      And the results should be equivalent to searching for "Laptops"
+      And no unexpected error should be displayed
+
+    Scenario: Search using mixed letter casing
+      Given the user is on the home page
+      When the user searches for "lApToPs"
+      Then the application should handle letter casing consistently
+      And the results should be equivalent to the supported search for "Laptops"
+
+    Scenario: Submit a search using the keyboard
+      Given the user has entered "Laptops" in the search field
+      When the user presses Enter
+      Then the search should be submitted
+      And the appropriate results should be displayed
+
+    Scenario: Submit a search using the search control
+      Given the user has entered "Mice" in the search field
+      When the user activates the search control
+      Then the search should be submitted
+      And the appropriate results should be displayed
+
+    Scenario: Open a product from search results
+      Given the user has searched for "Laptops"
+      And relevant products are displayed
+      When the user selects a product
+      Then the corresponding product details page should open
+      And the displayed product details should match the selected product
+
+    Scenario: Return to results after viewing a product
+      Given the user has searched for "Laptops"
+      And the user has opened a product details page
+      When the user navigates back to the search results
+      Then the user should return to a usable results view
+      And the previous search context should be preserved where supported
+4. Invalid, empty, and boundary input scenarios
+gherkin
+  Rule: Invalid and empty search queries
+
+    Scenario: Search for a non-existent product
+      Given the user is on the home page
+      When the user searches for "Car insurance"
+      Then no unrelated products should be presented as valid matches
+      And an appropriate empty state should be displayed
+      And the empty state should communicate that no results were found
+      And the application should remain responsive
+
+    Scenario: Search using special characters
+      Given the user is on the home page
+      When the user searches for "!@#$%"
+      Then the application should handle the query safely
+      And no application crash should occur
+      And either matching results or an appropriate empty state should be displayed
+
+    Scenario: Submit an empty search
+      Given the search interface is open
+      And the search field is empty
+      When the user submits the search
+      Then the application should handle the empty input gracefully
+      And it should not display misleading product matches
+      And it should follow the defined empty-query behavior
+
+    Scenario: Submit a whitespace-only query
+      Given the search interface is open
+      When the user enters only spaces in the search field
+      And submits the search
+      Then the query should be handled as empty if whitespace is trimmed
+      And the application should not fail
+      And the expected empty-query behavior should be observed
+
+    Scenario: Search using numeric input
+      Given the user is on the home page
+      When the user searches for "123456789"
+      Then matching products should be displayed if the query matches catalog data
+      And otherwise an appropriate empty state should be displayed
+      And the application should not produce an unexpected error
+
+    Scenario: Search using punctuation
+      Given the user is on the home page
+      When the user searches for "Laptop!!!"
+      Then the application should process the query safely
+      And results should follow the supported punctuation-matching rules
+      And the page should remain functional
+
+    Scenario: Search using a very long query
+      Given the search interface is available
+      When the user enters a query containing 1000 characters
+      And submits the search
+      Then the application should handle the input without crashing
+      And any input length restrictions should be enforced consistently
+      And the page layout should remain intact
+
+    Scenario: Search using Unicode characters
+      Given the search interface is available
+      When the user enters a query containing Unicode characters
+      And submits the search
+      Then the application should handle the query safely
+      And it should display matching results or an appropriate empty state
+      And no encoding-related UI corruption should occur
+
+    Scenario: Search using HTML-like input
+      Given the search interface is available
+      When the user searches for "<script>alert(1)</script>"
+      Then the input should be handled as search text
+      And the script should not execute
+      And the application should remain functional
+
+    Scenario: Search using SQL-like input
+      Given the search interface is available
+      When the user searches for "' OR '1'='1"
+      Then the query should be processed safely
+      And it should not expose unintended catalog data
+      And no database or server error details should be exposed
+
+    Scenario: Clear the search field
+      Given the user has entered "Laptops" in the search field
+      When the user clears the search field
+      Then the search field should become empty
+      And any associated suggestions should be handled consistently
+      And the user should be able to enter another query
+
+    Scenario: Replace an existing query
+      Given the user has searched for "Laptops"
+      When the user replaces the query with "Mice"
+      And submits the new search
+      Then the results should correspond to "Mice"
+      And stale results from the previous query should not remain incorrectly displayed
+
+    Scenario: Search for a query with no matching results
+      Given the search interface is available
+      When the user submits a valid query that matches no catalog products
+      Then the results area should display the defined empty state
+      And a clear no-results message should be visible
+      And the page should not display broken product cards
+
+    Scenario: Recover from an empty result set
+      Given the user has searched for a non-existent product
+      And the empty state is displayed
+      When the user searches for "Laptops"
+      Then relevant laptop results should be displayed
+      And the previous empty state should no longer obscure the results
+5. Search suggestions and result consistency
+gherkin
+  Rule: Search suggestions and result consistency
+
+    Scenario: Display suggestions while typing
+      Given the search interface supports autocomplete suggestions
+      When the user enters "Lap" in the search field
+      Then relevant suggestions should appear according to the application's behavior
+      And suggestions should be associated with the entered query
+      And the suggestion list should not obscure essential controls
+
+    Scenario: Select a search suggestion
+      Given relevant suggestions are displayed for "Lap"
+      When the user selects a suggestion
+      Then the selected suggestion should be processed correctly
+      And the resulting products should correspond to the selected suggestion
+
+    Scenario: Update suggestions when the query changes
+      Given suggestions are displayed for "Lap"
+      When the user changes the query to "Mou"
+      Then the suggestions should update to reflect the new query
+      And obsolete suggestions should not remain selectable
+
+    Scenario: Dismiss suggestions
+      Given the search interface displays suggestions
+      When the user clicks outside the search interface
+      Then the suggestions should be dismissed if supported
+      And the page should remain usable
+
+    Scenario: Verify search results against the catalog
+      Given the catalog contains products with known names
+      When the user searches for a known product name
+      Then every displayed result should correspond to a valid catalog product
+      And product names and identifying information should be consistent
+      And duplicate results should not appear unless explicitly supported
+
+    Scenario: Verify results after repeated searches
+      Given the user has searched for "Laptops"
+      When the user searches for "Mice"
+      And subsequently searches for "Tablets"
+      Then each search should display results for its own query
+      And results from earlier queries should not contaminate later results
+
+    Scenario: Refresh after performing a search
+      Given the user has completed a product search
+      When the user refreshes the page
+      Then the application should recover without a UI error
+      And search state should be restored or reset according to the defined behavior
+
+    Scenario: Use browser navigation after a search
+      Given the user has performed a product search
+      And the user has navigated to a product details page
+      When the user uses browser navigation to return
+      Then the application should display a valid page
+      And search state should be preserved where supported
+6. Filter behavior scenarios
+Execution note: The following cases apply when the relevant filter controls are available on the search results or product listing page. Validate the actual controls and supported values before execution.
+
+gherkin
+  Rule: Filtering search results
+
+    Scenario: Apply a category filter
+      Given the user is viewing a product listing
+      And the listing contains products from multiple categories
+      When the user selects the "Laptops" category filter
+      Then only products matching the selected category should be shown
+      And the displayed results should reflect the applied filter
+
+    Scenario: Apply a brand filter
+      Given the user is viewing products from multiple brands
+      When the user selects an available brand filter
+      Then the results should contain products matching that brand
+      And products from unrelated brands should be excluded
+
+    Scenario: Apply a minimum price filter
+      Given the listing contains products at different price points
+      When the user sets a minimum price
+      Then products below the minimum price should be excluded
+      And the remaining products should satisfy the selected price constraint
+
+    Scenario: Apply a maximum price filter
+      Given the listing contains products at different price points
+      When the user sets a maximum price
+      Then products above the maximum price should be excluded
+      And the remaining products should satisfy the selected price constraint
+
+    Scenario: Apply a price range filter
+      Given the listing contains products across multiple price ranges
+      When the user specifies a minimum and maximum price
+      Then only products within the selected range should be displayed
+      And the displayed prices should be consistent with the selected range
+
+    Scenario: Apply multiple filters
+      Given the listing supports category and brand filters
+      When the user selects a category
+      And selects a brand
+      Then the results should satisfy both active filters
+      And the displayed result count should reflect the filtered products
+
+    Scenario: Change an applied filter
+      Given a filter is currently applied
+      When the user selects a different filter value
+      Then the results should update to reflect the new value
+      And obsolete filter results should not remain visible
+
+    Scenario: Remove an individual filter
+      Given multiple filters are active
+      When the user removes one filter
+      Then that filter should no longer restrict the results
+      And the remaining active filters should continue to apply
+
+    Scenario: Clear all filters
+      Given one or more filters are active
+      When the user activates the clear-all-filters control
+      Then all supported filters should return to their default state
+      And the result list should reflect the absence of those filters
+
+    Scenario: Apply a filter with no matching products
+      Given a filter combination matches no catalog products
+      When the user applies that filter combination
+      Then an appropriate empty state should be displayed
+      And the application should remain functional
+      And the user should be able to remove or change the filters
+
+    Scenario: Verify filter state after refreshing
+      Given the user has applied a filter
+      When the user refreshes the listing page
+      Then the filter state should be restored or reset according to the specification
+      And the displayed results should be consistent with that state
+
+    Scenario: Verify filter and search interaction
+      Given the user has searched for "Laptops"
+      And a supported brand filter is available
+      When the user applies the brand filter
+      Then the displayed results should satisfy both the search query and the filter
+      And unrelated products should not be introduced
+7. Sorting behavior scenarios
+gherkin
+  Rule: Sorting product results
+
+    Scenario: Sort products by price ascending
+      Given the product listing contains products with different prices
+      And a price ascending sort option is available
+      When the user selects price ascending
+      Then products should be ordered from lowest to highest price
+      And the displayed order should match the selected sort option
+
+    Scenario: Sort products by price descending
+      Given the product listing contains products with different prices
+      And a price descending sort option is available
+      When the user selects price descending
+      Then products should be ordered from highest to lowest price
+      And the displayed order should match the selected sort option
+
+    Scenario: Sort products alphabetically
+      Given the product listing contains products with different names
+      And an alphabetical sort option is available
+      When the user selects alphabetical ascending order
+      Then product names should appear in the expected alphabetical order
+
+    Scenario: Change the active sort order
+      Given the product listing is sorted by price ascending
+      When the user selects price descending
+      Then the displayed order should update
+      And the previous sort order should no longer be applied
+
+    Scenario: Sort filtered results
+      Given the user has applied a product filter
+      And a supported sort option is available
+      When the user selects the sort option
+      Then only filtered products should remain in the result set
+      And those products should follow the selected sort order
+
+    Scenario: Sort search results
+      Given the user has searched for "Laptops"
+      And a supported sort option is available
+      When the user selects price ascending
+      Then the matching laptop results should be sorted by price
+      And products outside the search result set should not be introduced
+
+    Scenario: Change sorting repeatedly
+      Given the product listing supports multiple sort options
+      When the user selects price ascending
+      And changes the sorting to price descending
+      And changes the sorting to the default order
+      Then the displayed order should reflect the currently selected option
+      And no stale sorting state should remain
+
+    Scenario: Verify sorting when prices are equal
+      Given multiple products have the same displayed price
+      And price sorting is supported
+      When the user sorts by price
+      Then products should remain correctly ordered by price
+      And equal-price products should follow the application's defined tie-breaking behavior
+
+    Scenario: Verify the default sorting option
+      Given the user opens a product listing
+      When the listing finishes loading
+      Then the default sorting behavior should be applied
+      And the product order should be consistent with the application specification
+8. Pagination and result layout scenarios
+gherkin
+  Rule: Search results pagination and layout
+
+    Scenario: Display the first page of results
+      Given the search query returns more products than fit on one page
+      When the results finish loading
+      Then the first page of results should be displayed
+      And the visible products should fit within the defined page layout
+      And pagination controls should be available when supported
+
+    Scenario: Navigate to the next page
+      Given the search results span multiple pages
+      And the user is viewing the first page
+      When the user selects the next-page control
+      Then the next page of products should be displayed
+      And the displayed products should correspond to that page
+
+    Scenario: Navigate to the previous page
+      Given the user is viewing a page after the first page
+      When the user selects the previous-page control
+      Then the preceding page of products should be displayed
+      And the page navigation state should update correctly
+
+    Scenario: Navigate directly to a numbered page
+      Given numbered pagination controls are available
+      And multiple result pages exist
+      When the user selects a valid page number
+      Then the selected page should be displayed
+      And the active page indicator should be correct
+
+    Scenario: Navigate to the last page
+      Given the search results span multiple pages
+      When the user navigates to the last available page
+      Then the final page should be displayed
+      And the page should contain the remaining eligible results
+
+    Scenario: Prevent navigation beyond the last page
+      Given the user is viewing the last page of results
+      When the user checks the next-page control
+      Then navigation beyond the available pages should not occur
+      And the application should handle the boundary correctly
+
+    Scenario: Prevent navigation before the first page
+      Given the user is viewing the first page of results
+      When the user checks the previous-page control
+      Then navigation to an invalid preceding page should not occur
+      And the first page should remain valid
+
+    Scenario: Verify products across consecutive pages
+      Given the search results span multiple pages
+      When the user navigates through all available pages
+      Then each page should display valid products
+      And duplicate products should not occur unexpectedly across pages
+      And eligible products should not be omitted unexpectedly
+
+    Scenario: Verify pagination after applying a filter
+      Given the search results span multiple pages
+      And the user applies a filter that reduces the result count
+      When the filtered results finish loading
+      Then pagination should reflect the filtered result set
+      And the current page should remain valid
+      And stale pages should not be accessible
+
+    Scenario: Verify pagination after changing the query
+      Given the user is viewing a later page of search results
+      When the user submits a different search query
+      Then the new search should display a valid initial page
+      And results from the previous query should not remain visible
+
+    Scenario: Verify pagination with a single result
+      Given a search query returns exactly one product
+      When the results finish loading
+      Then the matching product should be displayed
+      And pagination controls should be hidden or disabled as appropriate
+
+    Scenario: Verify layout on an empty result page
+      Given the user's query returns no matching products
+      When the empty state is displayed
+      Then the empty-state message should be visible
+      And no broken product cards should appear
+      And the page should not contain unnecessary blank pagination pages
+
+    Scenario: Verify product cards remain aligned
+      Given multiple products are displayed in search results
+      When the result page finishes rendering
+      Then product cards should follow the defined grid layout
+      And product names and prices should remain readable
+      And overlapping elements should not occur
+
+    Scenario: Verify search layout on a narrow viewport
+      Given the application is open on a narrow mobile viewport
+      When the user performs a product search
+      Then the search field should remain usable
+      And product cards should fit the responsive layout
+      And horizontal overflow should not obstruct essential content
+
+    Scenario: Verify layout on a desktop viewport
+      Given the application is open on a desktop viewport
+      When the user performs a product search
+      Then the result grid should use the available layout appropriately
+      And product information should remain readable
+      And navigation controls should remain accessible
+
+    Scenario: Verify layout when product names are long
+      Given a search result contains a long product name
+      When the result card is displayed
+      Then the name should wrap or truncate according to the design
+      And essential product information should not overlap other elements
+9. Search performance, resilience, and accessibility
+gherkin
+  Rule: Search reliability and usability
+
+    Scenario: Verify search response time
+      Given the application is operational
+      When the user submits a valid search query
+      Then the results should load within the agreed performance threshold
+      And the page should remain responsive during the search
+
+    Scenario: Handle a temporary network interruption
+      Given the user is on the search page
+      When the network connection is interrupted during a search
+      Then the application should handle the failure gracefully
+      And it should not display misleading results as current results
+      And recovery should be possible after connectivity is restored
+
+    Scenario: Handle an unavailable search service
+      Given the search service is temporarily unavailable
+      When the user submits a search query
+      Then the application should display an appropriate error or recovery state
+      And technical error details should not be exposed to the shopper
+      And the page should not become unusable
+
+    Scenario: Submit repeated searches quickly
+      Given the search interface is available
+      When the user submits several different queries in quick succession
+      Then the displayed results should correspond to the latest accepted query
+      And outdated responses should not incorrectly replace newer results
+
+    Scenario: Use the search field with keyboard navigation
+      Given the user is navigating the page using a keyboard
+      When the user moves focus to the search field
+      Then the search field should receive keyboard focus
+      And the user should be able to enter a query and submit it
+      And interactive search controls should be keyboard accessible
+
+    Scenario: Verify search field labeling
+      Given the search interface is displayed
+      When the user inspects the search field using accessibility tools
+      Then the field should have an accessible name
+      And its purpose should be understandable to assistive technology
+
+    Scenario: Verify focus visibility
+      Given the user navigates search controls using a keyboard
+      When focus moves between interactive elements
+      Then the focused element should be visually identifiable
+      And the focus indicator should not be obscured
+
+    Scenario: Verify text readability in search results
+      Given search results are displayed
+      When the user views product names, prices, and messages
+      Then the text should remain readable
+      And essential information should not rely exclusively on color
+
+    Scenario: Verify browser zoom compatibility
+      Given the application is displayed in a supported browser
+      When the user increases browser zoom
+      Then the search field and results should remain usable
+      And essential controls should not become inaccessible
+
+
+
