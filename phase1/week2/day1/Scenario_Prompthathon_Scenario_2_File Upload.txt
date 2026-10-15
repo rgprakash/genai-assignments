@@ -1,0 +1,48 @@
+Scenario Name: Scenario 2 — File Upload
+Weak Prompt: ❌ Weak: "Generate test cases for file upload."
+
+What's missing: No file types, no size limits, no success/failure criteria, no security angle (malicious file upload).
+
+What I Feel is Missing
+- What file type is allowed and not allowed is not mentioned
+- Max file size is not given
+- No detail on Single file or multiple files can be uploaded
+- Can we drag and drop file for upload?
+- Positive and negative scenario information
+
+
+✅ Rewritten Prompt
+Combine all ICEPOT components into your final prompt here
+
+Instructions: Generate a comprehensive suite of manual test cases for this file upload component. You must cover multiple testing categories: functional (happy path), edge cases, negative scenarios (invalid inputs), and security constraints. For each test case, include a unique ID, description, preconditions, steps to reproduce, expected results, and severity level.
+
+Context: We are preparing to launch a new, enterprise-grade cloud storage feature for our web application. The core feature allows users to upload files via a drag-and-drop area or a file browser button. It is critical that this feature is robust, highly secure against malicious file injections, and handles large data loads smoothly.
+
+Example:
+• Test Case ID: TC_FU_001
+• Description: Verify successful upload of a valid PDF file within the size limit.
+• Preconditions: User is logged in and on the upload dashboard.
+• Steps: 1. Click 'Upload'. 2. Select sample.pdf (size: 2MB). 3. Click 'Submit'.
+• Expected Result: File uploads successfully, progress bar reaches 100%, and a "Success" notification appears.
+• Severity: High
+
+Persona: Act as an expert Senior QA Automation Engineer with over 10 years of experience in web application security and functional testing.
+
+Output: Present the final output as a clean, structured Markdown table with the columns: Test ID, Category, Title, Steps, and Expected Result. Group the rows by testing category (e.g., Functional, Security, Edge Cases).
+
+Tone: Maintain a highly professional, analytical, and thorough tone. Focus on technical precision and clarity.
+
+Observations OBS: Write your first observation on what improved in the output
+LLM used: Gemini
+a) For weak prompt "Generate test cases for file upload", the LLM has returned high-level response grouping
+- User interface (UI) & Usability test cases [Checking the visibility, validating functionality of each control separately]
+- Positive test cases 
+- Negative & Boundary value test cases
+
+b) Improved prompt using ICEPOT framework
+The weak prompt "Generate test cases for file upload" is vague, lacks boundaries, and typically results in a generic, shallow list of 5–10 obvious scenarios. By applying the ICEPOT framework, the prompt is transformed from a basic command into a highly contextual, strategic directive.  It transformed generic text-heavy lists into an engineering-grade, structured matrix. It stricted adhered to the structural constraints, adding critical QA dimensions like Severity Level and explicitly grouping items by target testing categories.
+
+c) The test cases evolved from high-level, generic summaries into concrete, actionable QA scripts. For example, a basic negative test case became an exact 0 KB empty file validation
+
+
+
