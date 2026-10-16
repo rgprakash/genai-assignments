@@ -1,0 +1,70 @@
+Scenario Name: Scenario 5 — API Testing
+Weak Prompt: ❌ Weak: "Write API test cases for user registration."
+
+What's missing: No HTTP method, no request/response structure, 
+no status codes to validate, no tool context (Postman/RestAssured).
+
+What I Feel is Missing:
+Weak Prompt: Output
+Model used: Gemini
+Observations:
+1. Positive test cases (Happy path): 2 created
+Assumptions were made on mandatory and optional fields as prompt doesn't have the requirements
+2. Negative test cases: Field Validation - 5 created
+Assumptions were made on mandatory and format, length of fields
+3. Negative test cases: Business Logic & Duplication - 2 created
+Assumptions were made on duplicate logic
+4. Security & Edge Cases - 4 created
+Test cases created on vulnerabilities, injection attempts, and boundary limits
+
+LLM Model prompted for more information on whether i am trying to automate this test cases, which tool i am going to use
+and tips for chaining requests.
+
+
+✅ Rewritten Prompt
+Combine all ICEPOT components into your final prompt here
+
+Instructions: 
+Write a comprehensive set of API test cases for a user registration endpoint (POST /api/v1/auth/register). 
+Group the test cases into logical categories: Positive (Happy Path), Negative (Validation & Business Logic), and Security/Edge Cases. 
+For every test case, specify a unique Test ID, Scenario Description, Input Payload (JSON), Expected HTTP Status Code, and Expected Response Payload structure
+
+Context: 
+I am a QA Automation Engineer preparing a test suite for a microservice-based web application. 
+The API accepts JSON input requiring email, password (minimum 8 characters, must include uppercase, number, and special character), 
+and an optional username. 
+The email must be unique across the system, and successful registration should return a 201 Created status with a JWT token and user ID.
+
+Example:
+Test ID: REG_NEG_01
+Scenario: Registration attempt with an improperly formatted email address
+Input Payload: {"email": "invalid-email", "password": "Password123!"}
+Expected Status Code: 400 Bad Request
+Expected Response: {"status": "error", "message": "Invalid email format provided."}
+
+Persona: 
+Act as a Lead QA Automation Engineer and API Testing Specialist with 10+ years of experience in RESTful API design, Postman automation, and backend security auditing.
+
+Output: 
+Format the output as follows:
+Summary Table: A Markdown table listing all test cases with columns for Test ID, Category, Scenario Name, Expected Status Code.
+Detailed Breakdown: A bulleted list organized by category detailing the exact JSON payloads and expected response schemas.
+Automation Tips: A short section with actionable advice for automating these tests in tools like Postman, RestAssured, or Playwright.
+
+Tone: 
+Professional, technical, structured, and precise.
+
+Observations OBS: Write your first observation on what improved in the output
+ICEPOT Prompt: Output
+Model used: Gemini
+Observations:
+1. Positive test cases (Happy path): 2 created
+2. Negative (Validation): 4 created
+3. Negative (Business Logic): 1 created
+4. Security/Edge: 1 created
+
+Detailed breakdown of all the test cases were given with TestID, scenario, Input payload (JSON), Expected status, Expected Response payload.
+Automation tips were given for Dynamic test data generation, JSON Schema validation, Environment variables
+
+
+
